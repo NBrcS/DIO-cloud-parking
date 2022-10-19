@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.function.BiConsumer;
 
 @Service
 public class ParkingService {
 
-    private static Map<String, Parking> parkingMap = new HashMap<>();
+    private static Map<String, Parking> parkingMap = new LinkedHashMap<>();
 
     static {
         String id = getUUID();
@@ -52,5 +52,35 @@ public class ParkingService {
         parkingMap.put(parkingCreate.getId(), parkingCreate);
 
         return parkingCreate;
+    }
+
+    public Parking put(Parking putParking, String ID) {
+
+        parkingMap.forEach(new BiConsumer<String, Parking>() {
+            @Override
+            public void accept(String s, Parking parking) {
+                if(Objects.equals(s, ID))
+                    parkingMap.put(ID, parking);
+            }
+        });
+
+        return putParking;
+    }
+
+    public Parking delete(String id) {
+
+        Parking parking = new Parking();
+        parkingMap.forEach(new BiConsumer<String, Parking>() {
+            @Override
+            public void accept(String s, Parking parking) {
+                if(Objects.equals(s, id)){
+                    parking = parkingMap.get(id);
+                    parkingMap.remove(id);
+                }
+
+            }
+        });
+
+        return parking;
     }
 }
