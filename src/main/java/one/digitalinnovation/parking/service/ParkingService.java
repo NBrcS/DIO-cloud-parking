@@ -1,5 +1,6 @@
 package one.digitalinnovation.parking.service;
 
+import one.digitalinnovation.parking.exceptions.ParkingNotFoundException;
 import one.digitalinnovation.parking.model.Parking;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,12 @@ public class ParkingService {
     }
 
     public Parking findById(String id) {
-        return parkingMap.get(id);
+        Parking parking = parkingMap.get(id);
+        if(parking == null){
+            throw new ParkingNotFoundException(id);
+        }
+
+        return parking;
     }
 
     public Parking create(Parking parkingCreate) {
@@ -56,30 +62,23 @@ public class ParkingService {
 
     public Parking put(Parking putParking, String ID) {
 
-        parkingMap.forEach(new BiConsumer<String, Parking>() {
-            @Override
-            public void accept(String s, Parking parking) {
-                if(Objects.equals(s, ID))
-                    parkingMap.put(ID, parking);
-            }
-        });
+        Parking parking = parkingMap.get(ID);
+        if(parking == null){
+            throw new ParkingNotFoundException(ID);
+        }
+        else parkingMap.put(ID, putParking);
 
         return putParking;
     }
 
-    public Parking delete(String id) {
+    public Parking delete(String ID) {
 
-        Parking parking = new Parking();
-        parkingMap.forEach(new BiConsumer<String, Parking>() {
-            @Override
-            public void accept(String s, Parking parking) {
-                if(Objects.equals(s, id)){
-                    parking = parkingMap.get(id);
-                    parkingMap.remove(id);
-                }
+        Parking parking = parkingMap.get(ID);
+        if(parking == null){
+            throw new ParkingNotFoundException(ID);
+        }
+        else parkingMap.remove(ID);
 
-            }
-        });
 
         return parking;
     }

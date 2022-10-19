@@ -40,8 +40,8 @@ public class ParkingController {
     @ApiOperation("Find a parking by ID")
     public ResponseEntity<ParkingDTO> finByID(@PathVariable String id){
         Parking parking = PARKING_SERVICE.findById(id);
-        ParkingDTO parkingDTO = PARKING_MAPPER.toParkingDTO(parking);
 
+        ParkingDTO parkingDTO = PARKING_MAPPER.toParkingDTO(parking);
         return ResponseEntity.ok(parkingDTO);
     }
 
