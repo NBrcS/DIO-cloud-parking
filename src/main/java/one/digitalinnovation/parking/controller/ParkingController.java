@@ -66,12 +66,12 @@ public class ParkingController {
         Parking parking = PARKING_SERVICE.put(create, id);
 
         ParkingDTO dto = PARKING_MAPPER.toParkingDTO(parking);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("delete a parking with the ID")
-    public ResponseEntity<ParkingDTO> put(@PathVariable String id){
+    public ResponseEntity<ParkingDTO> delete(@PathVariable String id){
 
         Parking parking = PARKING_SERVICE.delete(id);
 
