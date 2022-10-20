@@ -60,7 +60,7 @@ public class ParkingService {
         return parkingCreate;
     }
 
-    public Parking put(Parking putParking, String ID) {
+    public Parking update(Parking putParking, String ID) {
 
         Parking parking = parkingMap.get(ID);
         if(parking == null){

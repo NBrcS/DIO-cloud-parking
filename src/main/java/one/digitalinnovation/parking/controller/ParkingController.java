@@ -63,7 +63,7 @@ public class ParkingController {
                                           @RequestBody ParkingCreateDTO cDto){
 
         Parking create = PARKING_MAPPER.toParking(cDto);
-        Parking parking = PARKING_SERVICE.put(create, id);
+        Parking parking = PARKING_SERVICE.update(create, id);
 
         ParkingDTO dto = PARKING_MAPPER.toParkingDTO(parking);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
