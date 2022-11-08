@@ -6,8 +6,8 @@ import one.digitalinnovation.parking.controller.dto.ParkingCreateDTO;
 import one.digitalinnovation.parking.controller.dto.ParkingDTO;
 import one.digitalinnovation.parking.controller.mapper.ParkingMapper;
 import one.digitalinnovation.parking.model.Parking;
+import one.digitalinnovation.parking.repository.ParkingRepository;
 import one.digitalinnovation.parking.service.ParkingService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class ParkingController {
 
     public ParkingController(ParkingService parkingService, ParkingMapper parkingMapper){
         this.PARKING_MAPPER = parkingMapper;
-        this.PARKING_SERVICE = new ParkingService();
+        this.PARKING_SERVICE = parkingService;
     }
 
     @GetMapping
@@ -54,6 +54,13 @@ public class ParkingController {
 
         ParkingDTO parkingDTO = PARKING_MAPPER.toParkingDTO(parking);
         return ResponseEntity.status(HttpStatus.CREATED).body(parkingDTO);
+   }
+
+   @PostMapping("/{id}")
+   @ApiOperation("Checkout a car")
+   public ResponseEntity<ParkingDTO> exit(@PathVariable String id){
+        Parking parking = PARKING_SERVICE.checkout(id);
+        return ResponseEntity.ok(PARKING_MAPPER.toParkingDTO(parking));
    }
 
 
