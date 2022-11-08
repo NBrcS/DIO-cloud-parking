@@ -1,6 +1,7 @@
 package one.digitalinnovation.parking.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
